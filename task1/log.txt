@@ -1,0 +1,17 @@
+commit 2ecc7ac971c2b00f1880c9e8c19ba835cf8a286c (HEAD -> master)
+Author: Maksim Aliseyko <amaksis@mail.ru>
+Date:   Mon Feb 12 20:38:24 2018 +0300
+
+    status.txt
+
+commit 9bc324bcb4599fdf9fcc2b7821d3b34471096b82
+Author: Maksim Aliseyko <amaksis@mail.ru>
+Date:   Mon Feb 12 20:37:00 2018 +0300
+
+    task1
+
+commit fe7be500506c99e74899c5f859639bb6cd3a0ae0
+Author: Maksim Aliseyko <amaksis@mail.ru>
+Date:   Mon Feb 12 20:00:30 2018 +0300
+
+    add .gitignore
