@@ -177,6 +177,31 @@ main > .menu {
     flex-grow: 1;
     font-family: Arial;
 }
+
+.bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.like {
+    background-color: inherit;
+    border: 0;
+}
+
+.load-more {
+    width: 7rem;
+    min-height: 2rem;
+    margin: auto;
+    margin-bottom: 1rem;
+    background-color: #72bb53;
+    border-radius: 10%;
+    border-color: #4e5516;
+    outline: 0;
+
+}
+
 main > footer {
 
     width: 100%;
