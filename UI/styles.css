@@ -90,6 +90,7 @@ main > .menu {
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .add {
@@ -115,8 +116,15 @@ main > .menu {
     color: #4e5516;
 }
 
+.search-select {
+    height: 1.5rem;
+    margin-left: 0.5rem;
+    border-radius: 2rem;
+    outline: 0;
+}
+
 .search-box {
-    padding-left: 1.5rem;
+    //padding-left: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -132,7 +140,6 @@ main > .menu {
 
 .search-button {
     height: 1.5rem;
-    margin-top: 0.8rem;
     border-top-right-radius: 2rem;
     border-bottom-right-radius: 2rem;
     outline: 0;
