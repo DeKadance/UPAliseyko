@@ -17,13 +17,14 @@ const invoker = (function () {
 
     function renderMore() {
         const postsToTake = postsRendered + postsAmountToRender > photoPosts.length ?
-            photoPosts.length :
-            postsRendered + postsAmountToRender;
-        for (let i = postsRendered; i < postsToTake; i++) {
-            if (!photoPosts[i]) {
+            photoPosts.length - postsRendered:
+            postsAmountToRender;
+        let postsToRender = postManager.getPhotoPosts({}, postsRendered, postsToTake);
+        for (let i = 0; i < postsToTake; i++) {
+            if (!postsToRender[i]) {
                 console.log('dsajjkdhsajdhsna');
             }
-            postRenderer.renderPost(photoPosts[i]);
+            postRenderer.renderPost(postsToRender[i]);
         }
         postsRendered += postsAmountToRender;
     }
