@@ -1,4 +1,4 @@
-const postsFunctions = (function () {
+const postManager = (function () {
 
     function getPhotoPosts(filterConfig, skip = 0, top = 10) {
         let resultPosts = photoPosts;
@@ -16,9 +16,7 @@ const postsFunctions = (function () {
             }
 
             if (filterConfig.hashtags) {
-                console.log(filterConfig);
                 for (let i = 0; i < filterConfig.hashtags.length; i++) {
-                    console.log(filterConfig.hashtags[i]);
                     resultPosts = resultPosts.filter(post => post.hashtags.includes(filterConfig.hashtags[i]));
                 }
             }
@@ -39,13 +37,7 @@ const postsFunctions = (function () {
         if (!photoPost) {
             return false;
         }
-        if (typeof photoPost.id !== 'string') {
-            return false;
-        }
         if (typeof photoPost.description !== 'string' && photoPost.description.length > 200) {
-            return false;
-        }
-        if (!(photoPost.createdAt instanceof Date)) {
             return false;
         }
         if (typeof photoPost.author !== 'string' || photoPost.author.length === 0) {
@@ -61,6 +53,8 @@ const postsFunctions = (function () {
     }
 
     function addPhotoPost(photoPost) {
+        photoPost.id = photoPosts.length + 1;
+        photoPost.createdAt = new Date();
         if (validatePhotoPost(photoPost)) {
             if (photoPosts.some((post) => post.id === photoPost.id)) {
                 return false;
@@ -73,22 +67,18 @@ const postsFunctions = (function () {
 
     function editPhotoPost(id, photoPost) {
         let temp = getPhotoPost(id);
-        if (photoPost.description && photoPost.description.length < 200) {
-            temp.description = photoPost.description;
-        }
-        if (photoPost.photoLink && photoPost.photoLink !== 0) {
-            temp.photoLink = photoPost.photoLink;
-        }
-        if (photoPost.hashtags) {
-            temp.hashtags = photoPost.hashtags;
-        }
-        if (validatePhotoPost(temp)) {
-            for (let i = 0; i < photoPosts.length; i++) {
-                if (photoPosts[i].id === id) {
-                    photoPosts[i] = temp;
-                    return true;
-                }
+        if (validateUpdateObject(photoPost)) {
+            if (photoPost.description) {
+                temp.description = photoPost.description;
             }
+            if (photoPost.photoLink) {
+                temp.photoLink = photoPost.photoLink;
+            }
+            if (photoPost.hashtags) {
+                temp.hashtags = photoPost.hashtags;
+            }
+            postRenderer.editPost(temp.id, temp);
+            return true;
         }
         return false;
     }
@@ -103,6 +93,21 @@ const postsFunctions = (function () {
                 return true;
             }
         }
+        postRenderer.removePost(id);
+    }
+
+    function validateUpdateObject(updateObj) {
+        if (!updateObj) {
+            return false;
+        }
+        if (updateObj.description && (typeof updateObj.description !== 'string' || updateObj.description.length >= 200)) {
+            return false;
+        }
+
+        if (updateObj.photoLink && (typeof updateObj.photoLink !== 'string' || updateObj.photoLink.length === 0)) {
+            return false;
+        }
+        return true;
     }
 
     return {

@@ -107,7 +107,7 @@ const photoPosts = [
         description: '"The Best Sunrise in the West" - Mesa Arch, Canyonlands National Park',
         createdAt: new Date('2018-02-28'),
         photoLink: 'https://i.redd.it/qy6dx29ywrj01.jpg',
-        hashtags: '#canyon #USA'
+        hashtags: ['#canyon', '#USA']
     },
 
     {
@@ -198,6 +198,17 @@ const photoPosts = [
         createdAt: new Date('2018-02-27'),
         photoLink: 'https://i.redd.it/qgygtg4v1xj01.jpg',
         hashtags: ['#mountain', '#UK', '#forest']
+    },
+
+    {
+        id: '21',
+        author: 'Ken Sprousesen',
+        location: 'UK',
+        description: 'Ennerdale Forest, the Lake District',
+        createdAt: new Date('2018-02-27'),
+        photoLink: 'https://i.redd.it/qgygtg4v1xj01.jpg',
+        hashtags: ['#mountain', '#UK', '#forest']
     }
+
 
 ];
