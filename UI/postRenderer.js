@@ -6,6 +6,26 @@ const postRenderer = (function() {
         const template = getTemplate(post);
         const postElement = getPostElement(template, post.id);
         postsContainer.appendChild(postElement);
+        if(invoker.user === post.author){
+            renderUserUI(post.id);
+        }
+    }
+
+    function renderUserUI(id) {
+        const editButton = document.createElement('button');
+        editButton.classList.add('edit-button');
+        const editIcon = document.createElement('i');
+        editIcon.classList.add('material-icons');
+        editIcon.innerText = 'edit';
+        editButton.appendChild(editIcon);
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        const deleteIcon = document.createElement('i');
+        deleteIcon.classList.add('material-icons');
+        deleteIcon.innerText = 'delete';
+        deleteButton.appendChild(deleteIcon);
+        document.getElementById(`title-${id}`).appendChild(editButton);
+        document.getElementById(`title-${id}`).appendChild(deleteButton);
     }
 
     function removePost(id) {
@@ -20,13 +40,20 @@ const postRenderer = (function() {
         postsContainer.replaceChild(updatedPost, postToEdit);
     }
 
+    function addPost(post) {
+            const template = getTemplate(post);
+            const postElement = getPostElement(template, post.id);
+            postsContainer.insertBefore(postElement, postsContainer.getElementsByClassName('post')[0]);
+    }
+
+
     function getPostId(id) {
         return `post-${id}`;
     }
 
     function getTemplate(post) {
         return `
-            <div class="post-title">
+            <div class="post-title" id = 'title-${post.id}'>
                 <img class="avatar" TODO>
                 <div class="title-info">
                     <span class="author">${post.author}</span>
@@ -55,7 +82,9 @@ const postRenderer = (function() {
 
     return {
         editPost,
+        addPost,
         renderPost,
         removePost,
+        postsContainer,
     }
 }());

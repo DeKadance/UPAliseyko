@@ -53,13 +53,14 @@ const postManager = (function () {
     }
 
     function addPhotoPost(photoPost) {
-        photoPost.id = photoPosts.length + 1;
+        photoPost.id = (photoPosts.length + 1).toString();
         photoPost.createdAt = new Date();
         if (validatePhotoPost(photoPost)) {
             if (photoPosts.some((post) => post.id === photoPost.id)) {
                 return false;
             }
             photoPosts.push(photoPost);
+            postRenderer.addPost(photoPost);
             return true;
         }
         return false;

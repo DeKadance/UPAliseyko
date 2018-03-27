@@ -198,17 +198,5 @@ const photoPosts = [
         createdAt: new Date('2018-02-27'),
         photoLink: 'https://i.redd.it/qgygtg4v1xj01.jpg',
         hashtags: ['#mountain', '#UK', '#forest']
-    },
-
-    {
-        id: '21',
-        author: 'Ken Sprousesen',
-        location: 'UK',
-        description: 'Ennerdale Forest, the Lake District',
-        createdAt: new Date('2018-02-27'),
-        photoLink: 'https://i.redd.it/qgygtg4v1xj01.jpg',
-        hashtags: ['#mountain', '#UK', '#forest']
     }
-
-
 ];

@@ -1,5 +1,6 @@
 const invoker = (function () {
 
+    let user = 'Johny Dee';
     let postsRendered = 0;
     const postsAmountToRender = 10;
 
@@ -29,8 +30,22 @@ const invoker = (function () {
         postsRendered += postsAmountToRender;
     }
 
+    function showUser() {
+        const header = document.getElementById('header');
+        let userInfo = document.createElement('span');
+        userInfo.classList.add('user-info');
+        header.insertBefore(userInfo, header.getElementsByTagName('i')[0]);
+        if (!user) {
+            userInfo.innerHTML = `Зарегистрируйтесь или войдите`;
+        }
+        else {
+            userInfo.innerHTML = `Здравствуйте, ${user}`;
+        }
+    }
     return {
+        showUser,
+        user,
         addEventListeners,
-        renderMore,
+        renderMore
     }
 }());
