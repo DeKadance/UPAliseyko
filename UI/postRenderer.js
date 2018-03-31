@@ -1,4 +1,4 @@
-const postRenderer = (function() {
+const postRenderer = (function () {
 
     const postsContainer = document.getElementById('#posts-container');
 
@@ -6,26 +6,22 @@ const postRenderer = (function() {
         const template = getTemplate(post);
         const postElement = getPostElement(template, post.id);
         postsContainer.appendChild(postElement);
-        if(invoker.user === post.author){
-            renderUserUI(post.id);
+        if (invoker.user === post.author) {
+            renderUserButtons(post.id);
         }
     }
 
-    function renderUserUI(id) {
-        const editButton = document.createElement('button');
-        editButton.classList.add('edit-button');
-        const editIcon = document.createElement('i');
-        editIcon.classList.add('material-icons');
-        editIcon.innerText = 'edit';
-        editButton.appendChild(editIcon);
-        const deleteButton = document.createElement('button');
-        deleteButton.classList.add('delete-button');
-        const deleteIcon = document.createElement('i');
-        deleteIcon.classList.add('material-icons');
-        deleteIcon.innerText = 'delete';
-        deleteButton.appendChild(deleteIcon);
-        document.getElementById(`title-${id}`).appendChild(editButton);
-        document.getElementById(`title-${id}`).appendChild(deleteButton);
+    function renderUserButtons(id) {
+        const editButtons = document.createElement('div');
+        editButtons.classList.add('edit-Buttons');
+        editButtons.innerHTML = `
+        <button class="edit-button">
+            <i class="material-icons">edit</i>
+        </button>
+        <button class="delete-button">
+            <i class="material-icons">delete</i>
+        </button>`;
+        document.getElementById(`title-${id}`).appendChild(editButtons);
     }
 
     function removePost(id) {
@@ -41,9 +37,10 @@ const postRenderer = (function() {
     }
 
     function addPost(post) {
-            const template = getTemplate(post);
-            const postElement = getPostElement(template, post.id);
-            postsContainer.insertBefore(postElement, postsContainer.getElementsByClassName('post')[0]);
+        const template = getTemplate(post);
+        const postElement = getPostElement(template, post.id);
+        postsContainer.insertBefore(postElement, postsContainer.getElementsByClassName('post')[0]);
+        invoker.increasePostsRendered();
     }
 
 

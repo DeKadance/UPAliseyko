@@ -29,7 +29,9 @@ const invoker = (function () {
         }
         postsRendered += postsAmountToRender;
     }
-
+    function increasePostsRendered() {
+        postsRendered++;
+    }
     function showUser() {
         const header = document.getElementById('header');
         let userInfo = document.createElement('span');
@@ -46,6 +48,7 @@ const invoker = (function () {
         showUser,
         user,
         addEventListeners,
-        renderMore
+        renderMore,
+        increasePostsRendered
     }
 }());
