@@ -11,6 +11,17 @@ const invoker = (function () {
         document.getElementById('load-more-button').addEventListener('click', function (event) {
             renderMore();
         });
+        document.getElementsByClassName('post')[0].addEventListener('click', function (event) {
+
+        });
+        document.getElementsByClassName('edit-button')[0].addEventListener('click', function (event) {
+            alert("edit1");
+            event.stopPropagation();
+        });
+        document.getElementById('mc-id').addEventListener('click', function (event) {
+            this.style.display = "none";
+            this.innerHTML = '';
+        });
         /*document.getElementById('load-more-button').removeEventListener('click', function (event) {
             renderMore();
         });*/
@@ -52,3 +63,20 @@ const invoker = (function () {
         increasePostsRendered
     }
 }());
+
+/*let searchInput = document.getElementById("search");
+document.forms[0].addEventListener("submit", function (e) {
+    e.preventDefault();
+    let request = searchInput.value;
+    postRenderer.clear();
+    let result = [];
+    if (request.indexOf('@') === 0){
+        result = postManager.getPhotoPosts(0, postManager.size(), {author : request.slice(1, request.length)});
+    }
+    if (request.indexOf('#') === 0){
+        result = postManager.getPhotoPosts(0, postManager.size(), {hashTags: request.split(" ")});
+    }
+    result.forEach( item => {
+        postRenderer.renderPost(item)
+    });
+});*/
