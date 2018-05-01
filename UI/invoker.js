@@ -6,17 +6,29 @@ const invoker = (function () {
 
     function addEventListeners() {
         document.getElementById('add-post-button').addEventListener('click', function (event) {
-            alert('TBD');
+            document.getElementById('mc-id').style.display = "flex";
+            const addModal = getAddModal();
+            addModal.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+            document.getElementById('mc-id').appendChild(addModal);
+            document.getElementById('add-submit').addEventListener('click', function (event) {
+                const desc = document.getElementById('desc-id');
+                const loc = document.getElementById('loc-id');
+                const photo = document.getElementById('img-text-id');
+                const hash = document.getElementById('hash-id');
+                const post = {
+                    author: 'Hans Adler',
+                    location: loc.value,
+                    description: desc.value,
+                    photoLink: photo.value,
+                    hashtags: ['#mountain', '#Nordicpower', '#snow']
+                };
+                postManager.addPhotoPost(post);
+            });
         });
         document.getElementById('load-more-button').addEventListener('click', function (event) {
             renderMore();
-        });
-        document.getElementsByClassName('post')[0].addEventListener('click', function (event) {
-
-        });
-        document.getElementsByClassName('edit-button')[0].addEventListener('click', function (event) {
-            alert("edit1");
-            event.stopPropagation();
         });
         document.getElementById('mc-id').addEventListener('click', function (event) {
             this.style.display = "none";
@@ -43,6 +55,10 @@ const invoker = (function () {
     function increasePostsRendered() {
         postsRendered++;
     }
+
+    function decreasePostsRendered() {
+        postsRendered--;
+    }
     function showUser() {
         const header = document.getElementById('header');
         let userInfo = document.createElement('span');
@@ -55,12 +71,43 @@ const invoker = (function () {
             userInfo.innerHTML = `Здравствуйте, ${user}`;
         }
     }
+
+    function getAddModal() {
+        const editModal = document.createElement('div');
+        editModal.classList.add('modal');
+        editModal.innerHTML = `
+            <div class = "edit-content">
+                <div class="edit-div">
+                <span>Location:</span>
+                <input type="text" name="location" id="loc-id"/>
+                </div>
+                <div class="edit-div">
+                <span>Image:</span>
+                <input type="file" name="pic" id="img-id" accept="image/*">
+                <input type="submit">
+                <input type="text" id="img-text-id">
+                </div>
+                <div class="edit-div">
+                <span>Description:</span>
+                <textarea class="description-ed" id="desc-id"></textarea>
+                </div>
+                <div class="edit-div">
+                <span>Hashtags:</span>
+                <input type="text" name="hashtags" id="hash-id"/>
+                </div>
+                <button class="submit-edit" id="add-submit">Сохранить изменения</button>
+            </div>
+            `;
+        return editModal;
+    }
+
     return {
         showUser,
         user,
         addEventListeners,
         renderMore,
-        increasePostsRendered
+        increasePostsRendered,
+        decreasePostsRendered
     }
 }());
 

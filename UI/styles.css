@@ -13,6 +13,13 @@ body {
     align-items: stretch;
 }
 
+input {
+}
+
+.description-ed {
+    height: 10rem;
+}
+
 .modal-container {
     width: 100%;
     height: 100%;
@@ -34,10 +41,31 @@ body {
     flex-direction: column;
 }
 
+.modal-img-container{
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+
+
+}
+
 .modal-post-img {
-    min-height: 10rem;
-    min-width: 20rem;
-    padding: 0 0.5rem;
+    object-fit: contain;
+    width: 100%;
+}
+
+.edit-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.edit-div {
+    display: flex;
+    flex-direction: column;
 }
 
 div {
@@ -165,6 +193,7 @@ main > .menu {
     border-top-left-radius: 2rem;
     border-bottom-left-radius: 2rem;
     outline: 0;
+    margin-top: 0;
 
 }
 
@@ -187,7 +216,7 @@ main > .menu {
 .post-title {
     display: flex;
     flex-direction: row;
-
+    padding: 1px;
 }
 
 .title-info {
@@ -218,15 +247,21 @@ main > .menu {
     outline: 0;
 }
 
-
-.post-img {
+.img-container {
     height: 8rem;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.post-img {object-fit: contain;
 }
 
 .description {
 
     padding: 0.2rem;
-    flex-grow: 1;
+    flex-grow: 2;
     flex-direction: column;
     justify-content: space-between;
 }

@@ -89,12 +89,12 @@ const postManager = (function () {
             return false;
         }
         for (let i = 0; i < photoPosts.length; i++) {
-            if (photoPosts[i].id === id) {
+            if (photoPosts[i].id === id.toString()) {
                 photoPosts.splice(i, 1);
+                postRenderer.removePost(id);
                 return true;
             }
         }
-        postRenderer.removePost(id);
     }
 
     function validateUpdateObject(updateObj) {

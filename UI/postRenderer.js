@@ -8,26 +8,79 @@ const postRenderer = (function () {
         const postElement = getPostElement(template, modalTemplate, post.id);
         postsContainer.appendChild(postElement);
         if (invoker.user === post.author) {
-            renderUserButtons(post.id);
+            renderUserButtons(post);
         }
     }
 
-    function renderUserButtons(id) {
+    function renderUserButtons(post) {
         const editButtons = document.createElement('div');
         editButtons.classList.add('edit-Buttons');
-        editButtons.innerHTML = `
-        <button class="edit-button">
-            <i class="material-icons">edit</i>
-        </button>
-        <button class="delete-button">
-            <i class="material-icons">delete</i>
-        </button>`;
-        document.getElementById(`title-${id}`).appendChild(editButtons);
+        editButtons.appendChild(getEditButton(post));
+        editButtons.appendChild(getDeleteButton(post));
+        document.getElementById(`title-${post.id}`).appendChild(editButtons);
+    }
+
+    function getEditButton(post) {
+        const editButton = document.createElement('button');
+        editButton.classList.add('edit-button');
+        editButton.innerHTML = `
+        <i class="material-icons">edit</i>`;
+        editButton.addEventListener('click', function (event) {
+           event.stopPropagation();
+           document.getElementById('mc-id').style.display = "flex";
+           const editModal = getEditModal(post);
+           editModal.addEventListener('click', function (event) {
+               event.stopPropagation();
+           });
+           document.getElementById('mc-id').appendChild(editModal);
+        });
+        return editButton;
+    }
+
+    function getEditModal(post) {
+        const editModal = document.createElement('div');
+        editModal.classList.add('modal');
+        editModal.innerHTML = `
+            <div class = "edit-content">
+                <div class="edit-div">
+                <span>Location:</span>
+                <input type="text" name="location" placeholder="${post.location}"/>
+                </div>
+                <div class="edit-div">
+                <span>Image:</span>
+                <input type="file" name="pic" accept="image/*">
+                <input type="submit">
+                </div>
+                <div class="edit-div">
+                <span>Description:</span>
+                <textarea class="description-ed" placeholder="${post.description}"></textarea>
+                </div>
+                <div class="edit-div">
+                <span>Hashtags:</span>
+                <input type="text" name="hashtags" placeholder="${post.hashtags}"/>
+                </div>
+                <button class="submit-edit">Сохранить изменения</button>
+            </div>
+            `;
+        return editModal;
+    }
+
+    function getDeleteButton(post) {
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        deleteButton.innerHTML = `
+        <i class="material-icons">delete</i>`;
+        deleteButton.addEventListener('click', function (event) {
+            event.stopPropagation();
+            postManager.removePhotoPost(post.id);
+        });
+        return deleteButton;
     }
 
     function removePost(id) {
         const postToRemove = postsContainer.querySelector(`#${getPostId(id)}`);
         postsContainer.removeChild(postToRemove);
+        invoker.decreasePostsRendered();
     }
 
     function editPost(id, newPost) {
@@ -58,7 +111,9 @@ const postRenderer = (function () {
                     <span class="location">${post.location}</span>
                 </div>
             </div>
-            <img class="post-img" src="${post.photoLink}">
+                <div class ="img-container">
+                <img class="post-img" src="${post.photoLink}">
+                </div>
             <div class="description">
                 <span class="info">${post.description}</span>
                 <span class="hashtags">${post.hashtags.join(', ')}</span>
@@ -79,7 +134,9 @@ const postRenderer = (function () {
                     <span class="location">${post.location}</span>
                 </div>
             </div>
+            <div class ="modal-img-container">
             <img class="modal-post-img" src="${post.photoLink}">
+            </div>
             <div class="description">
                 <span class="info">${post.description}</span>
                 <span class="hashtags">${post.hashtags.join(', ')}</span>
@@ -101,7 +158,6 @@ const postRenderer = (function () {
             let postModal = document.createElement('div');
             postModal.classList.add('modal');
             postModal.id = 'modal-id';
-            postModal.style.zIndex = "100";
             postModal.innerHTML = modalTemplate;
             document.getElementById('mc-id').appendChild(postModal);
             document.getElementById('modal-id').addEventListener('click', function (event1) {
@@ -118,5 +174,6 @@ const postRenderer = (function () {
         renderPost,
         removePost,
         postsContainer,
+        getEditModal
     }
 }());
