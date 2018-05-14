@@ -1,5 +1,27 @@
 const postManager = (function () {
 
+    let photoPosts = JSON.parse(localStorage.getItem('data'));
+    if (!photoPosts) {
+        photoPosts = Posts;
+    } else {
+        photoPosts.forEach(function (item) {
+            item.createdAt = new Date(item.createdAt);
+        });
+    }
+    window.addEventListener('beforeunload', function () {
+        if (!photoPosts) {
+            localStorage.setItem('data', JSON.stringify(Posts));
+        } else {
+            localStorage.setItem('data', JSON.stringify(photoPosts));
+        }
+    });
+
+    let maxId = photoPosts.length + 1;
+
+    function getLength() {
+        return photoPosts.length;
+    }
+
     function getPhotoPosts(filterConfig, skip = 0, top = 10) {
         let resultPosts = photoPosts;
         if (filterConfig) {
@@ -53,7 +75,8 @@ const postManager = (function () {
     }
 
     function addPhotoPost(photoPost) {
-        photoPost.id = (photoPosts.length + 1).toString();
+        maxId++;
+        photoPost.id = (maxId).toString();
         photoPost.createdAt = new Date();
         if (validatePhotoPost(photoPost)) {
             if (photoPosts.some((post) => post.id === photoPost.id)) {
@@ -69,6 +92,9 @@ const postManager = (function () {
     function editPhotoPost(id, photoPost) {
         let temp = getPhotoPost(id);
         if (validateUpdateObject(photoPost)) {
+            if (photoPost.location) {
+                temp.location = photoPost.location;
+            }
             if (photoPost.description) {
                 temp.description = photoPost.description;
             }
@@ -117,7 +143,9 @@ const postManager = (function () {
         getPhotoPost,
         getPhotoPosts,
         editPhotoPost,
-        validatePhotoPost
+        validatePhotoPost,
+        getLength,
+        maxId
     };
 }());
 

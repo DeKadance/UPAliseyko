@@ -43,25 +43,39 @@ const postRenderer = (function () {
         editModal.innerHTML = `
             <div class = "edit-content">
                 <div class="edit-div">
-                <span>Location:</span>
-                <input type="text" name="location" placeholder="${post.location}"/>
+                    <span>Location:</span>
+                    <input type="text" name="location" value="${post.location}"/>
                 </div>
                 <div class="edit-div">
-                <span>Image:</span>
-                <input type="file" name="pic" accept="image/*">
-                <input type="submit">
+                    <span>Image link:</span>
+                    <input type="text" id="img-text-id" value="${post.photoLink}">
                 </div>
                 <div class="edit-div">
-                <span>Description:</span>
-                <textarea class="description-ed" placeholder="${post.description}"></textarea>
+                    <span>Description:</span>
+                    <textarea class="description-ed">${post.description}</textarea>
                 </div>
                 <div class="edit-div">
-                <span>Hashtags:</span>
-                <input type="text" name="hashtags" placeholder="${post.hashtags}"/>
+                    <span>Hashtags:</span>
+                    <input type="text" name="hashtags" value="${post.hashtags}"/>
                 </div>
                 <button class="submit-edit">Сохранить изменения</button>
             </div>
             `;
+        editModal.children[0].children[4].addEventListener('click', function () {
+            const desc = editModal.children[0].children[2].children[1];
+            const loc = editModal.children[0].children[0].children[1];
+            const photo = editModal.children[0].children[1].children[1];
+            const hash = editModal.children[0].children[3].children[1];
+            const updatePost = {
+                location: loc.value,
+                description: desc.value,
+                photoLink: photo.value,
+                hashtags: hash.value.split(" "),
+            };
+            postManager.editPhotoPost(post.id, updatePost);
+            document.querySelector('.modal-container').style.display = "none";
+            document.querySelector('.modal-container').innerHTML = '';
+        });
         return editModal;
     }
 
@@ -86,15 +100,23 @@ const postRenderer = (function () {
     function editPost(id, newPost) {
         const postToEdit = postsContainer.querySelector(`#${getPostId(id)}`);
         const template = getTemplate(newPost);
-        const updatedPost = getPostElement(template, newPost.id);
+        const modalTemplate = getModalTemplate(newPost);
+        const updatedPost = getPostElement(template, modalTemplate, newPost.id);
         postsContainer.replaceChild(updatedPost, postToEdit);
+        if (invoker.user === newPost.author) {
+            renderUserButtons(newPost);
+        }
     }
 
     function addPost(post) {
         const template = getTemplate(post);
-        const postElement = getPostElement(template, post.id);
+        const modalTemplate = getModalTemplate(post);
+        const postElement = getPostElement(template, modalTemplate, post.id);
         postsContainer.insertBefore(postElement, postsContainer.getElementsByClassName('post')[0]);
         invoker.increasePostsRendered();
+        if (invoker.user === post.author) {
+            renderUserButtons(post);
+        }
     }
 
 

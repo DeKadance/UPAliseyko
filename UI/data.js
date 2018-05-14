@@ -1,4 +1,4 @@
-const photoPosts = [
+const Posts = [
     {
         id: '1',
         author: 'Johny Dee',

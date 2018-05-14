@@ -1,5 +1,5 @@
 invoker.showUser();
-invoker.renderMore();
+invoker.renderMore({});
 invoker.addEventListeners();
 
 
