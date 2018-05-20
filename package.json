@@ -1,0 +1,23 @@
+{
+  "name": "upaliseyko",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeKadance/UPAliseyko.git"
+  },
+  "author": "DeKadance",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DeKadance/UPAliseyko/issues"
+  },
+  "homepage": "https://github.com/DeKadance/UPAliseyko#readme",
+  "dependencies": {
+    "express.js": "^1.0.0",
+    "npm": "^6.0.1"
+  }
+}
